@@ -1,0 +1,311 @@
+// ── DATA AND CONFIGURATION ───────────────────────────────────────────────────
+const CATEGORY_LABELS = {
+  babor:     'Aula Babor',
+  estribor:  'Aula Estribor',
+  lab:       'Laboratorio',
+  multimedia:'Multimedia',
+  servicios: 'Servicios',
+  opsu:      'OPSU',
+  canchas:   'Área Deportiva',
+  admin:     'Administrativo',
+  honor:     'Área de Honor',
+  banos:     'Servicios Sanitarios',
+};
+
+const CATEGORY_COLORS = {
+  babor:     'var(--aula-babor-stroke)',
+  estribor:  'var(--aula-estribor-stroke)',
+  lab:       'var(--lab-stroke)',
+  multimedia:'var(--multimedia-stroke)',
+  servicios: 'var(--servicios-stroke)',
+  opsu:      'var(--opsu-stroke)',
+  canchas:   'var(--canchas-stroke)',
+  admin:     'var(--admin-stroke)',
+  honor:     'var(--honor-stroke)',
+  banos:     'var(--banos-stroke)',
+};
+
+// ── DOM ELEMENTS ──────────────────────────────────────────────────────────────
+const body = document.body;
+const svg = document.getElementById('campus');
+const mapContainer = document.getElementById('map-container');
+const mapSvgWrap = document.getElementById('map-svg-wrap');
+const allZones = document.querySelectorAll('.zone');
+const searchInput = document.getElementById('search');
+const filterBtns = document.querySelectorAll('.filter-btn');
+const clearFilterBtn = document.getElementById('clear-filter');
+const themeToggleBtn = document.getElementById('theme-toggle');
+
+const panel = document.getElementById('info-panel');
+const pTitle = document.getElementById('panel-title');
+const pBadge = document.getElementById('panel-category-badge');
+const pDesc = document.getElementById('panel-desc');
+
+// ── ZOOM AND PAN INTERACTION ─────────────────────────────────────────────────
+let scale = 1.0;
+let panX = 0;
+let panY = 0;
+let isPanning = false;
+let startX = 0;
+let startY = 0;
+
+function updateTransform() {
+  // Apply visual transform to the SVG
+  svg.style.transform = `translate(${panX}px, ${panY}px) scale(${scale})`;
+}
+
+// Drag functionality
+mapSvgWrap.addEventListener('mousedown', (e) => {
+  // Only pan on left click
+  if (e.button !== 0) return;
+  isPanning = true;
+  startX = e.clientX - panX;
+  startY = e.clientY - panY;
+  svg.style.cursor = 'grabbing';
+  e.preventDefault();
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (!isPanning) return;
+  panX = e.clientX - startX;
+  panY = e.clientY - startY;
+  updateTransform();
+});
+
+window.addEventListener('mouseup', () => {
+  if (isPanning) {
+    isPanning = false;
+    svg.style.cursor = 'grab';
+  }
+});
+
+mapSvgWrap.addEventListener('mouseleave', () => {
+  if (isPanning) {
+    isPanning = false;
+    svg.style.cursor = 'grab';
+  }
+});
+
+// Wheel Zoom functionality
+mapSvgWrap.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const zoomFactor = 1.1;
+  const oldScale = scale;
+  
+  if (e.deltaY < 0) {
+    // Zoom In
+    scale = Math.min(scale * zoomFactor, 6.0);
+  } else {
+    // Zoom Out
+    scale = Math.max(scale / zoomFactor, 0.4);
+  }
+  
+  // Pivot adjustment relative to mouse pointer inside the container
+  const rect = mapSvgWrap.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+  
+  panX = mouseX - (mouseX - panX) * (scale / oldScale);
+  panY = mouseY - (mouseY - panY) * (scale / oldScale);
+  
+  updateTransform();
+}, { passive: false });
+
+// Zoom Control Buttons
+document.getElementById('zoom-in').addEventListener('click', () => {
+  scale = Math.min(scale * 1.25, 6.0);
+  updateTransform();
+});
+
+document.getElementById('zoom-out').addEventListener('click', () => {
+  scale = Math.max(scale / 1.25, 0.4);
+  updateTransform();
+});
+
+document.getElementById('zoom-reset').addEventListener('click', () => {
+  scale = 1.0;
+  panX = 0;
+  panY = 0;
+  updateTransform();
+});
+
+
+// ── DETAILS PANEL ─────────────────────────────────────────────────────────────
+function openPanel(name, cat, desc) {
+  const catLabel = CATEGORY_LABELS[cat] || cat;
+  const catColor = CATEGORY_COLORS[cat] || 'var(--accent)';
+
+  pTitle.textContent = name;
+  pBadge.textContent = catLabel;
+  pBadge.style.background = catColor;
+  pDesc.textContent = desc || `Área de ${catLabel} dentro del campus de la Universidad Marítima del Caribe (UMC).`;
+
+  panel.classList.add('open');
+}
+
+function closePanel() {
+  panel.classList.remove('open');
+  // Remove active highlighted states
+  allZones.forEach(z => z.classList.remove('highlighted'));
+}
+
+document.getElementById('panel-close').addEventListener('click', closePanel);
+
+// ── ZONE INTERACTIONS ────────────────────────────────────────────────────────
+allZones.forEach(zone => {
+  // Show tooltip or info panel on click
+  zone.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const name = zone.dataset.name || 'Zona sin nombre';
+    const cat  = zone.dataset.cat  || 'admin';
+    const desc = zone.dataset.desc || '';
+    
+    // Highlight zone
+    allZones.forEach(z => z.classList.remove('highlighted'));
+    zone.classList.add('highlighted');
+    
+    openPanel(name, cat, desc);
+  });
+});
+
+// Click outside map resets focus
+mapSvgWrap.addEventListener('click', (e) => {
+  if (e.target === mapSvgWrap || e.target.id === 'campus') {
+    closePanel();
+  }
+});
+
+
+// ── FILTERING SYSTEM ─────────────────────────────────────────────────────────
+let activeFilter = null;
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cat = btn.dataset.cat;
+    
+    if (activeFilter === cat) {
+      clearFilter();
+      return;
+    }
+    
+    activeFilter = cat;
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    // Dim other zones
+    allZones.forEach(z => {
+      z.classList.toggle('dimmed', z.dataset.cat !== cat);
+    });
+    
+    closePanel();
+  });
+});
+
+clearFilterBtn.addEventListener('click', clearFilter);
+
+function clearFilter() {
+  activeFilter = null;
+  filterBtns.forEach(b => b.classList.remove('active'));
+  allZones.forEach(z => z.classList.remove('dimmed'));
+}
+
+
+// ── LIVE SEARCH ──────────────────────────────────────────────────────────────
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.trim().toLowerCase();
+  
+  if (!query) {
+    allZones.forEach(z => z.classList.remove('dimmed', 'highlighted'));
+    return;
+  }
+  
+  let firstMatch = null;
+  
+  allZones.forEach(z => {
+    const name = (z.dataset.name || '').toLowerCase();
+    const cat = (z.dataset.cat || '').toLowerCase();
+    const catLabel = (CATEGORY_LABELS[z.dataset.cat] || '').toLowerCase();
+    
+    const isMatch = name.includes(query) || cat.includes(query) || catLabel.includes(query);
+    z.classList.toggle('dimmed', !isMatch);
+    
+    if (isMatch && !firstMatch) {
+      firstMatch = z;
+    }
+  });
+  
+  // Highlight and focus first match
+  allZones.forEach(z => z.classList.remove('highlighted'));
+  if (firstMatch) {
+    firstMatch.classList.add('highlighted');
+    const name = firstMatch.dataset.name || 'Zona';
+    const cat  = firstMatch.dataset.cat  || 'admin';
+    const desc = firstMatch.dataset.desc || '';
+    openPanel(name, cat, desc);
+    
+    // Auto-focus zoom on searched item
+    // Extract bbox or center of target element
+    const rect = firstMatch.getBoundingClientRect();
+    const mapRect = mapSvgWrap.getBoundingClientRect();
+    
+    // Calculate approximate offset to center the element
+    // Only zoom in slightly if not already zoomed
+    if (scale < 1.5) scale = 1.6;
+    
+    const elX = parseFloat(firstMatch.querySelector('rect, polygon, ellipse').getAttribute('x') || 
+                           firstMatch.querySelector('rect, polygon, ellipse').getAttribute('cx') || 400);
+    const elY = parseFloat(firstMatch.querySelector('rect, polygon, ellipse').getAttribute('y') || 
+                           firstMatch.querySelector('rect, polygon, ellipse').getAttribute('cy') || 500);
+    
+    // Set pan coordinates (scaled and centered)
+    panX = (mapRect.width / 2) - (elX * scale);
+    panY = (mapRect.height / 2) - (elY * scale);
+    updateTransform();
+  } else {
+    closePanel();
+  }
+});
+
+searchInput.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    searchInput.value = '';
+    clearFilter();
+    closePanel();
+  }
+});
+
+
+// ── DARK MODE TOGGLER ────────────────────────────────────────────────────────
+// LocalStorage Backup
+const savedTheme = localStorage.getItem('umc-map-theme');
+if (savedTheme === 'dark') {
+  body.classList.add('dark-theme');
+  updateThemeButton(true);
+} else {
+  updateThemeButton(false);
+}
+
+themeToggleBtn.addEventListener('click', () => {
+  const isDark = body.classList.toggle('dark-theme');
+  localStorage.setItem('umc-map-theme', isDark ? 'dark' : 'light');
+  updateThemeButton(isDark);
+});
+
+function updateThemeButton(isDark) {
+  if (isDark) {
+    // Show Sun Icon for light mode
+    themeToggleBtn.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+      </svg>
+    `;
+  } else {
+    // Show Moon Icon for dark mode
+    themeToggleBtn.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12.3 22h-.1c-5.5 0-10-4.5-10-10 0-4.8 3.5-8.9 8.2-9.8.5-.1 1 .2 1.2.7.2.5 0 1.1-.4 1.4-2.8 2-3.8 5.8-2.2 9 1.6 3.1 5.1 4.7 8.5 3.8.5-.1 1.1.1 1.3.6.2.5 0 1.1-.4 1.4-2 1.5-4.4 2.3-6.4 2.3z"></path>
+      </svg>
+    `;
+  }
+}

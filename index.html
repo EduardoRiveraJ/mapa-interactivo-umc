@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa del Campus – Universidad Marítima del Caribe</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <h1><img id="umc-logo" src="data:image/png;base64,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MngFVi3TVL9Jw5CnblidDRFCNgDJIxDuDtsQfUDla40naGdZmf09LLNDX8is2eox7a4/EWDcAOd6nbsNuylWV8IcZRhdbo2rTBE4PMbJXDcA8+q580+Egxk9+TJSMhgDi8FruodPfhVfFcGrMOc0NdvB2V7AeWd8yt6nq4Zgbi1uq0Y9OiHIvycOVuRW560cFqUNb+v6N+lxBHDhuey8L+N0rWfTnvTQxmhAYIOu0W9LDt1AgEb77DutLS+kq2vM/cuVb+Sjxrg3y+t7mhx25IHoFPcZ4J6XrPD52Gdw9Xkn+al6TZGeVjXyzbtxoBmMtNeGi15MTjaSGsv5qAu1lp6kwVcHTluvYOljKkGzf94r0p4/xC1a4MggGEpu7lnMpH/mPb8ldmH0bp/FtAq46IEevSu9FFHG0NjY1gHoBsp+i2XoKU7xbvu5uz+Wi0pcRmkFgbDoq20N4S4bCOFu6Dctnlz5D1En6lWRBDHDGI4mNY0dgAvRFYQABYLRRfMsbJGFj2hzSNiCvpF6irzUGFlwNt16nG6XHSu3miaOYj+03+oX1+lYsJVGVZYYKzi0Eb/DJudht81PpY2Sxlj2hzSNiCoFlvDHGX8vDbM8rYI5PMbB1noDvcDtuombCmuqW1MR3XceqztnO4WOzCndSdlmtHOz7r2gheq8qsLK9dkMY2axuwXqpZYEREREREREREREREREWCsrBRFlEREREREREREREREREREREREREREREREREREREREWHtDmlrgCD3CpLxIpxNbmmRRgRgv+EfkruKqLXcRdjMzL/hkP8VWdpm7zIR/jBW9Qmxd2U48OadatpakYIWMLoxuQO/Ckq4Hh8d9JUCf/AJQ/ku+rMtFERERERERERERERERERERERERERERERERERERFgrKwURZRERERERERERERERERERERERERERERERERERERERFg9lWet4h/drLP27wyFWaVXOt9GZ3M2DVq5Z8GNkf1SwtA+Ib77b99vkovEqF9X4e6fdN1mhlEd+qk3h7/APCVD/7Y/kpAtLCUW43GQU2ncRNAW6pRYUREREREREREREREREREREREREREREREREREREWCsrBRFlERERERERERERERERERERERERERERERERERERERERNkRERERERERERERERERERERERERERERERERERERERERERYKysFEX//2Q==" alt="UMC Logo" style="height:52px;width:52px;object-fit:contain;border-radius:50%;background:#fff;padding:3px;flex-shrink:0;"> Universidad Marítima del Caribe <span>Mapa Interactivo del Campus</span></h1>
+  <div class="header-controls">
+    <div id="search-wrap">
+      <svg id="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="search" type="text" placeholder="Buscar aula, lab, área…">
+    </div>
+    <button id="theme-toggle" class="theme-toggle" title="Cambiar tema"></button>
+  </div>
+</header>
+
+<!-- FILTER BAR -->
+<div id="filters">
+  <span>Filtrar:</span>
+  <button class="filter-btn" data-cat="babor"><span class="dot" style="background:var(--aula-babor)"></span>Babor</button>
+  <button class="filter-btn" data-cat="estribor"><span class="dot" style="background:var(--aula-estribor)"></span>Estribor</button>
+  <button class="filter-btn" data-cat="lab"><span class="dot" style="background:var(--lab)"></span>Laboratorios</button>
+  <button class="filter-btn" data-cat="multimedia"><span class="dot" style="background:var(--multimedia)"></span>Multimedia</button>
+  <button class="filter-btn" data-cat="servicios"><span class="dot" style="background:var(--servicios)"></span>Servicios</button>
+  <button class="filter-btn" data-cat="opsu"><span class="dot" style="background:var(--opsu)"></span>OPSU</button>
+  <button class="filter-btn" data-cat="canchas"><span class="dot" style="background:var(--canchas)"></span>Canchas</button>
+  <button class="filter-btn" data-cat="admin"><span class="dot" style="background:var(--admin)"></span>Admin</button>
+  <button id="clear-filter">✕ Limpiar filtro</button>
+</div>
+
+<!-- MAIN -->
+<main>
+  <div id="map-container">
+    <div id="map-svg-wrap">
+
+<!-- ══════════════════════════════════════════════════
+     SVG CAMPUS MAP  viewBox="0 0 860 1060"
+     ══════════════════════════════════════════════════ -->
+<svg id="campus" viewBox="0 0 960 1060" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <pattern id="grass" patternUnits="userSpaceOnUse" width="8" height="8">
+    <rect width="8" height="8" fill="#dce8f0"/>
+  </pattern>
+  <filter id="soft"><feGaussianBlur stdDeviation="1"/></filter>
+</defs>
+
+<!-- MAP BACKGROUND -->
+<rect width="960" height="1060" fill="#f4f6fb"/>
+<rect x="10" y="10" width="940" height="1040" rx="10" fill="#f9fafb" stroke="#cdd3e0" stroke-width="1.5"/>
+
+<!-- ════════════ PASILLO BABOR (vertical left) ════════════ -->
+<rect x="218" y="30" width="52" height="680" fill="#e8ecf4" stroke="#b0b8d0" stroke-width="1"/>
+<text class="pasillo-label" x="244" y="370" transform="rotate(-90,244,370)">P A S I L L O &nbsp; D E &nbsp; B A B O R</text>
+
+<!-- ════════════ PASILLO ESTRIBOR (vertical right) ════════════ -->
+<rect x="548" y="30" width="52" height="580" fill="#e8ecf4" stroke="#b0b8d0" stroke-width="1"/>
+<text class="pasillo-label" x="574" y="320" transform="rotate(90,574,320)">P A S I L L O &nbsp; D E &nbsp; E S T R I B O R</text>
+
+<!-- ════════════ ZONA CENTRAL SUPERIOR ════════════ -->
+<!-- CC / CatumCaribe -->
+<g class="zone" data-name="CC – CatumCaribe Formación Integral" data-cat="admin" data-desc="Centro de formación integral del campus.">
+  <rect x="270" y="30" width="80" height="40" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="310" y="50" font-size="8" fill="#5a4a20">CC</text>
+  <text class="zone-label" x="310" y="62" font-size="6.5" fill="#5a4a20">CatumCaribe</text>
+</g>
+
+<!-- FI -->
+<g class="zone" data-name="FI – Formación Integral" data-cat="admin" data-desc="Área de Formación Integral.">
+  <rect x="490" y="30" width="55" height="40" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="517" y="54" font-size="10" fill="#5a4a20">FI</text>
+</g>
+
+<!-- Patio de Honor -->
+<g class="zone" data-name="Patio de Honor" data-cat="honor" data-desc="Patio central de honor del campus, utilizado para ceremonias y formaciones oficiales.">
+  <rect x="270" y="72" width="275" height="130" rx="4" fill="#dce8f8" stroke="#90b0d8" stroke-width="1.5"/>
+  <text class="zone-label" x="407" y="120" font-size="14" font-weight="600" fill="#1d3557">Patio de Honor</text>
+  <!-- Compass rose decoration -->
+  <text x="407" y="148" text-anchor="middle" font-size="28" fill="#7090b8" opacity="0.5">⚓</text>
+</g>
+
+<!-- Rectorado -->
+<g class="zone" data-name="Rectorado" data-cat="admin" data-desc="Sede del Rector de la UMC.">
+  <rect x="270" y="205" width="100" height="38" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="320" y="224" font-size="9" fill="#5a4a20">Rectorado</text>
+</g>
+
+<!-- Bitácora -->
+<g class="zone" data-name="Bitácora" data-cat="admin" data-desc="Sala de bitácora y registros institucionales.">
+  <rect x="375" y="205" width="85" height="38" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="417" y="224" font-size="9" fill="#5a4a20">Bitácora</text>
+</g>
+
+<!-- Sala de Consejo -->
+<g class="zone" data-name="Sala de Consejo" data-cat="admin" data-desc="Sala para reuniones del Consejo Directivo de la UMC.">
+  <rect x="462" y="205" width="83" height="38" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="503" y="224" font-size="8.5" fill="#5a4a20">Sala de Consejo</text>
+</g>
+
+<!-- ════════════ CADETÓDROMO ════════════ -->
+<g class="zone" data-name="Cadetódromo" data-cat="canchas" data-desc="Área principal de instrucción y desfile de cadetes. Espacio central del campus naval.">
+  <rect x="270" y="248" width="275" height="165" rx="4" fill="#cfd8f0" stroke="#8898cc" stroke-width="1.5"/>
+  <text class="zone-label" x="407" y="335" font-size="18" font-weight="700" fill="#1d3557" letter-spacing="2">CADETÓDROMO</text>
+</g>
+
+<!-- ════════════ PASILLO EDIFICIO ADMINISTRATIVO ════════════ -->
+<rect x="270" y="416" width="275" height="30" rx="3" fill="#d8dce8" stroke="#a0a8c0" stroke-width="1"/>
+<text class="zone-label" x="407" y="431" font-size="9" fill="#3a4060">Pasillo Edificio Administrativo</text>
+
+<!-- ════════════ ZONA CENTRAL INFERIOR (bajo pasillo) ════════════ -->
+<!-- C. Estudios -->
+<g class="zone" data-name="Control de Estudios" data-cat="admin" data-desc="Oficina de Control de Estudios. Gestión académica de los cadetes.">
+  <rect x="270" y="449" width="90" height="40" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="315" y="469" font-size="8.5" fill="#5a4a20">C. Estudios</text>
+</g>
+
+<!-- Biblioteca PB -->
+<g class="zone" data-name="Biblioteca (Planta Baja)" data-cat="admin" data-desc="Biblioteca en planta baja. Colección de textos de navegación e hidrografía.">
+  <rect x="270" y="492" width="90" height="40" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="315" y="512" font-size="8.5" fill="#5a4a20">Biblioteca PB</text>
+</g>
+
+<!-- Biblioteca 1er -->
+<g class="zone" data-name="Biblioteca (1er Piso)" data-cat="admin" data-desc="Biblioteca en primer piso. Acceso a textos especializados y sala de estudio.">
+  <rect x="365" y="492" width="95" height="40" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="412" y="512" font-size="8.5" fill="#5a4a20">Biblioteca 1er</text>
+</g>
+
+<!-- Lab. Inglés -->
+<g class="zone" data-name="Laboratorio de Inglés" data-cat="lab" data-desc="Laboratorio de idiomas para el aprendizaje del inglés técnico y náutico.">
+  <rect x="270" y="535" width="90" height="40" rx="3" fill="#b8e6c0" stroke="#70c080" stroke-width="1.5"/>
+  <text class="zone-label" x="315" y="555" font-size="8.5" fill="#1a5a28">Lab. Inglés</text>
+</g>
+
+<!-- ESC/ENV -->
+<g class="zone" data-name="ESC / ENV" data-cat="admin" data-desc="Escuela de Navegación y Área de Estudios Ambientales.">
+  <rect x="365" y="449" width="95" height="40" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="412" y="469" font-size="8.5" fill="#5a4a20">ESC / ENV</text>
+</g>
+
+<!-- Vic. Adm (2do) -->
+<g class="zone" data-name="Vicerrectorado Académico (2do Piso)" data-cat="admin" data-desc="Vicerrectorado Académico en segundo piso.">
+  <rect x="365" y="535" width="95" height="40" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="412" y="555" font-size="7.5" fill="#5a4a20">Vic. Adm 2do</text>
+</g>
+
+<!-- Vicerrectorado Académico (full width) -->
+<g class="zone" data-name="Vicerrectorado Académico" data-cat="admin" data-desc="Sede principal del Vicerrectorado Académico.">
+  <rect x="270" y="578" width="190" height="38" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="365" y="597" font-size="8.5" fill="#5a4a20">Vicerrectorado Académico</text>
+</g>
+
+<!-- ════════════ ZONA DEPORTIVA CENTRAL (CANCHAS) ════════════ -->
+<g class="zone" data-name="Canchas Deportivas Centrales" data-cat="canchas" data-desc="Canchas multideportivas centrales del campus. Basket, voleibol, actividades físicas.">
+  <rect x="270" y="650" width="200" height="120" rx="4" fill="#b0b8e8" stroke="#7080c0" stroke-width="1.5"/>
+  <text class="zone-label" x="370" y="710" font-size="20" font-weight="700" fill="#1d2a6e">CANCHAS</text>
+</g>
+
+<!-- FÚTBOL -->
+<g class="zone" data-name="Campo de Fútbol" data-cat="canchas" data-desc="Campo de fútbol del campus. Utilizado para entrenamientos y competencias interescolares.">
+  <rect x="540" y="800" width="195" height="100" rx="4" fill="#b0b8e8" stroke="#7080c0" stroke-width="1.5"/>
+  <text class="zone-label" x="637" y="853" font-size="18" font-weight="700" fill="#1d2a6e">FÚTBOL</text>
+</g>
+
+<!-- BÉISBOL -->
+<g class="zone" data-name="Campo de Béisbol" data-cat="canchas" data-desc="Campo de béisbol del campus. Deporte tradicional del campus.">
+  <rect x="60" y="790" width="200" height="100" rx="4" fill="#b0b8e8" stroke="#7080c0" stroke-width="1.5"/>
+  <text class="zone-label" x="160" y="842" font-size="17" font-weight="700" fill="#1d2a6e">BÉISBOL</text>
+</g>
+
+<!-- CANCHAS INFERIORES -->
+<g class="zone" data-name="Canchas Deportivas (Zona Sur)" data-cat="canchas" data-desc="Canchas deportivas en la zona sur del campus.">
+  <rect x="350" y="810" width="200" height="80" rx="4" fill="#b0b8e8" stroke="#7080c0" stroke-width="1.5"/>
+  <text class="zone-label" x="450" y="852" font-size="17" font-weight="700" fill="#1d2a6e">CANCHAS</text>
+</g>
+
+<!-- TALLERES -->
+<g class="zone" data-name="Talleres" data-cat="servicios" data-desc="Talleres de mantenimiento, mecánica y trabajos manuales del campus.">
+  <rect x="60" y="900" width="280" height="65" rx="4" fill="#c0737a" stroke="#904850" stroke-width="1.5"/>
+  <text class="zone-label" x="200" y="933" font-size="18" font-weight="700" fill="#fff">TALLERES</text>
+</g>
+
+<!-- ════════════ LATERAL IZQUIERDO (BABOR) ════════════ -->
+<!-- Aula Magna (semicircle-ish) -->
+<g class="zone" data-name="Aula Magna" data-cat="admin" data-desc="Auditorio principal del campus. Capacidad para actos y conferencias multitudinarias.">
+  <ellipse cx="100" cy="100" rx="72" ry="68" fill="#dce8f8" stroke="#90b0d8" stroke-width="1.5"/>
+  <rect x="64" y="68" width="72" height="65" rx="2" fill="#c8d8f0" stroke="#90b0d8" stroke-width="1"/>
+  <text class="zone-label" x="100" y="95" font-size="9" font-weight="700" fill="#1d3557">AULA</text>
+  <text class="zone-label" x="100" y="107" font-size="9" font-weight="700" fill="#1d3557">MAGNA</text>
+  <!-- Stage seats representation -->
+  <line x1="68" y1="115" x2="132" y2="115" stroke="#90b0d8" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <line x1="68" y1="122" x2="132" y2="122" stroke="#90b0d8" stroke-width="0.8" stroke-dasharray="3,2"/>
+</g>
+
+<!-- RRII -->
+<g class="zone" data-name="RRII – Relaciones Interinstitucionales" data-cat="admin" data-desc="Oficina de Relaciones Interinstitucionales.">
+  <rect x="150" y="230" width="65" height="30" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="182" y="245" font-size="8" fill="#5a4a20">RRII</text>
+</g>
+
+<!-- Aulas Babor F-2 (6,5,4) -->
+<g class="zone" data-name="Aula 6 (F-2)" data-cat="babor">
+  <rect x="130" y="278" width="30" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="145" y="292" font-size="8" fill="#7a1a1a">6</text>
+</g>
+<g class="zone" data-name="Aula 5 (F-2)" data-cat="babor">
+  <rect x="162" y="278" width="30" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="177" y="292" font-size="8" fill="#7a1a1a">5</text>
+</g>
+<g class="zone" data-name="Aula 4 (F-2)" data-cat="babor">
+  <rect x="194" y="278" width="22" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="205" y="292" font-size="8" fill="#7a1a1a">4</text>
+</g>
+<!-- WC -->
+<g class="zone" data-name="Baño (F-2 Babor)" data-cat="banos">
+  <rect x="100" y="278" width="28" height="28" rx="2" fill="#f5e0dc" stroke="#d0a0a0" stroke-width="1"/>
+  <text class="zone-label" x="114" y="292" font-size="7" fill="#7a4040">WC</text>
+</g>
+<!-- F-2 label -->
+<text x="60" y="295" font-size="7.5" fill="#888" text-anchor="middle">F-2</text>
+
+<!-- Aulas Babor F-1 (3,2,1) -->
+<g class="zone" data-name="Aula 3 (F-1)" data-cat="babor">
+  <rect x="130" y="310" width="30" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="145" y="324" font-size="8" fill="#7a1a1a">3</text>
+</g>
+<g class="zone" data-name="Aula 2 (F-1)" data-cat="babor">
+  <rect x="162" y="310" width="30" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="177" y="324" font-size="8" fill="#7a1a1a">2</text>
+</g>
+<g class="zone" data-name="Aula 1 (F-1)" data-cat="babor">
+  <rect x="194" y="310" width="22" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="205" y="324" font-size="8" fill="#7a1a1a">1</text>
+</g>
+<g class="zone" data-name="Baño (F-1 Babor)" data-cat="banos">
+  <rect x="100" y="310" width="28" height="28" rx="2" fill="#f5e0dc" stroke="#d0a0a0" stroke-width="1"/>
+  <text class="zone-label" x="114" y="324" font-size="7" fill="#7a4040">WC</text>
+</g>
+<text x="60" y="327" font-size="7.5" fill="#888" text-anchor="middle">F-1</text>
+
+<!-- Aulas Babor F-2 (12,11,10) -->
+<g class="zone" data-name="Aula 12 (F-2)" data-cat="babor">
+  <rect x="130" y="345" width="30" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="145" y="359" font-size="8" fill="#7a1a1a">12</text>
+</g>
+<g class="zone" data-name="Aula 11 (F-2)" data-cat="babor">
+  <rect x="162" y="345" width="30" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="177" y="359" font-size="8" fill="#7a1a1a">11</text>
+</g>
+<g class="zone" data-name="Aula 10 (F-2)" data-cat="babor">
+  <rect x="194" y="345" width="22" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="205" y="359" font-size="8" fill="#7a1a1a">10</text>
+</g>
+<g class="zone" data-name="Baño (F-2 Babor B)" data-cat="banos">
+  <rect x="100" y="345" width="28" height="28" rx="2" fill="#f5e0dc" stroke="#d0a0a0" stroke-width="1"/>
+  <text class="zone-label" x="114" y="359" font-size="7" fill="#7a4040">WC</text>
+</g>
+<text x="60" y="362" font-size="7.5" fill="#888" text-anchor="middle">F-2</text>
+
+<!-- Aulas Babor F-1 (9,8,7) -->
+<g class="zone" data-name="Aula 9 (F-1)" data-cat="babor">
+  <rect x="130" y="377" width="30" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="145" y="391" font-size="8" fill="#7a1a1a">9</text>
+</g>
+<g class="zone" data-name="Aula 8 (F-1)" data-cat="babor">
+  <rect x="162" y="377" width="30" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="177" y="391" font-size="8" fill="#7a1a1a">8</text>
+</g>
+<g class="zone" data-name="Aula 7 (F-1)" data-cat="babor">
+  <rect x="194" y="377" width="22" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="205" y="391" font-size="8" fill="#7a1a1a">7</text>
+</g>
+<g class="zone" data-name="Baño (F-1 Babor B)" data-cat="banos">
+  <rect x="100" y="377" width="28" height="28" rx="2" fill="#f5e0dc" stroke="#d0a0a0" stroke-width="1"/>
+  <text class="zone-label" x="114" y="391" font-size="7" fill="#7a4040">WC</text>
+</g>
+<text x="60" y="394" font-size="7.5" fill="#888" text-anchor="middle">F-1</text>
+
+<!-- Multimedia M14/M15 -->
+<g class="zone" data-name="Multimedia M14" data-cat="multimedia" data-desc="Aula multimedia M14. Equipada con proyector y sistemas de presentación digital.">
+  <rect x="100" y="440" width="58" height="50" rx="3" fill="#ffd4a0" stroke="#e8a050" stroke-width="1.5"/>
+  <text class="zone-label" x="129" y="465" font-size="9" fill="#7a3a00">M14</text>
+</g>
+<g class="zone" data-name="Multimedia M15" data-cat="multimedia" data-desc="Aula multimedia M15. Equipada con proyector y sistemas de presentación digital.">
+  <rect x="162" y="440" width="54" height="50" rx="3" fill="#ffd4a0" stroke="#e8a050" stroke-width="1.5"/>
+  <text class="zone-label" x="189" y="465" font-size="9" fill="#7a3a00">M15</text>
+</g>
+<rect x="100" y="492" width="116" height="18" rx="2" fill="#f0e8d0" stroke="#c8b060" stroke-width="1"/>
+<text class="zone-label" x="158" y="501" font-size="7.5" fill="#7a5a20">Multimedia 14/15</text>
+
+<!-- OPSU / SG -->
+<g class="zone" data-name="Servicios Generales (SG)" data-cat="servicios" data-desc="Área de Servicios Generales del campus.">
+  <rect x="60" y="548" width="38" height="32" rx="2" fill="#c0737a" stroke="#904850" stroke-width="1.2"/>
+  <text class="zone-label" x="79" y="564" font-size="7.5" fill="#fff">SG</text>
+</g>
+<g class="zone" data-name="OPSU" data-cat="opsu" data-desc="Zona OPSU – Oficina de Planificación del Sector Universitario.">
+  <rect x="100" y="548" width="38" height="32" rx="2" fill="#c9aef5" stroke="#8860e0" stroke-width="1.2"/>
+  <text class="zone-label" x="119" y="564" font-size="7.5" fill="#3a0080">OPSU</text>
+</g>
+<g class="zone" data-name="OPSU 2" data-cat="opsu">
+  <rect x="140" y="548" width="38" height="32" rx="2" fill="#c9aef5" stroke="#8860e0" stroke-width="1.2"/>
+  <text class="zone-label" x="159" y="564" font-size="7.5" fill="#3a0080">OPSU 2</text>
+</g>
+<g class="zone" data-name="OPSU 3" data-cat="opsu">
+  <rect x="180" y="548" width="36" height="32" rx="2" fill="#c9aef5" stroke="#8860e0" stroke-width="1.2"/>
+  <text class="zone-label" x="198" y="564" font-size="7.5" fill="#3a0080">OPSU 3</text>
+</g>
+<text x="79" y="590" font-size="6.5" fill="#888" text-anchor="middle">SG=Serv.Gen.</text>
+
+<!-- Usos Múltiples -->
+<g class="zone" data-name="Usos Múltiples" data-cat="servicios" data-desc="Área de usos múltiples. Salón polivalente para eventos y reuniones.">
+  <rect x="60" y="600" width="148" height="32" rx="3" fill="#b8a060" stroke="#8a7030" stroke-width="1.5"/>
+  <text class="zone-label" x="134" y="616" font-size="8.5" fill="#fff">Usos Múltiples</text>
+</g>
+<g class="zone" data-name="Aula 16" data-cat="babor">
+  <rect x="210" y="600" width="28" height="32" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="224" y="616" font-size="8" fill="#7a1a1a">16</text>
+</g>
+
+<!-- WC + Lab Amb / Electro / Sala Prof -->
+<g class="zone" data-name="Baño (Babor Sur)" data-cat="banos">
+  <rect x="60" y="638" width="32" height="24" rx="2" fill="#f5e0dc" stroke="#d0a0a0" stroke-width="1"/>
+  <text class="zone-label" x="76" y="650" font-size="7" fill="#7a4040">WC</text>
+</g>
+<g class="zone" data-name="Laboratorio Ambiental" data-cat="lab" data-desc="Laboratorio de Ciencias Ambientales.">
+  <rect x="60" y="680" width="52" height="28" rx="2" fill="#b8e6c0" stroke="#70c080" stroke-width="1.2"/>
+  <text class="zone-label" x="86" y="694" font-size="7" fill="#1a5a28">Lab. Amb</text>
+</g>
+<g class="zone" data-name="Electro" data-cat="lab" data-desc="Laboratorio de Electrónica y Electrotecnia.">
+  <rect x="114" y="680" width="44" height="28" rx="2" fill="#b8e6c0" stroke="#70c080" stroke-width="1.2"/>
+  <text class="zone-label" x="136" y="694" font-size="7.5" fill="#1a5a28">Electro</text>
+</g>
+<g class="zone" data-name="Sala de Profesores" data-cat="admin" data-desc="Sala de profesores y personal docente.">
+  <rect x="160" y="680" width="56" height="28" rx="2" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.2"/>
+  <text class="zone-label" x="188" y="694" font-size="7" fill="#5a4a20">Sala Prof</text>
+</g>
+
+<!-- Carnet / WC -->
+<rect x="140" y="638" width="38" height="12" rx="1" fill="#f0e8d0" stroke="#c8b060" stroke-width="1"/>
+<text x="159" y="647" font-size="6.5" fill="#7a5a20" text-anchor="middle">Carnet</text>
+<rect x="140" y="652" width="38" height="12" rx="1" fill="#f5e0dc" stroke="#d0a0a0" stroke-width="1"/>
+<text x="159" y="661" font-size="6.5" fill="#7a4040" text-anchor="middle">WC</text>
+
+<!-- Aulas 53-56 -->
+<g class="zone" data-name="Aula 53" data-cat="babor">
+  <rect x="270" y="900" width="32" height="30" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="286" y="915" font-size="8" fill="#7a1a1a">53</text>
+</g>
+<g class="zone" data-name="Aula 54" data-cat="babor">
+  <rect x="304" y="900" width="32" height="30" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="320" y="915" font-size="8" fill="#7a1a1a">54</text>
+</g>
+<g class="zone" data-name="Aula 55" data-cat="babor">
+  <rect x="270" y="932" width="32" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="286" y="946" font-size="8" fill="#7a1a1a">55</text>
+</g>
+<g class="zone" data-name="Aula 56" data-cat="babor">
+  <rect x="304" y="932" width="32" height="28" rx="2" fill="#f8b4b4" stroke="#e07070" stroke-width="1.2"/>
+  <text class="zone-label" x="320" y="946" font-size="8" fill="#7a1a1a">56</text>
+</g>
+
+<!-- ════════════ LATERAL DERECHO (ESTRIBOR) ════════════ -->
+<!-- Aulas superiores estribor 56-62 -->
+<g class="zone" data-name="Aula 56 (Estribor)" data-cat="estribor">
+  <rect x="605" y="30" width="24" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="617" y="42" font-size="7" fill="#0a3a60">56</text>
+</g>
+<g class="zone" data-name="Aula 57" data-cat="estribor">
+  <rect x="630" y="30" width="24" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="642" y="42" font-size="7" fill="#0a3a60">57</text>
+</g>
+<g class="zone" data-name="Aula 58" data-cat="estribor">
+  <rect x="655" y="30" width="24" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="667" y="42" font-size="7" fill="#0a3a60">58</text>
+</g>
+<g class="zone" data-name="CA (Estribor)" data-cat="admin">
+  <rect x="680" y="30" width="24" height="24" rx="2" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.2"/>
+  <text class="zone-label" x="692" y="42" font-size="7" fill="#5a4a20">CA</text>
+</g>
+<g class="zone" data-name="1er PB (Estribor)" data-cat="admin">
+  <rect x="705" y="30" width="28" height="24" rx="2" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.2"/>
+  <text class="zone-label" x="719" y="42" font-size="7" fill="#5a4a20">1er PB</text>
+</g>
+<g class="zone" data-name="Aula 59" data-cat="estribor">
+  <rect x="735" y="30" width="24" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="747" y="42" font-size="7" fill="#0a3a60">59</text>
+</g>
+<g class="zone" data-name="Aula 60" data-cat="estribor">
+  <rect x="760" y="30" width="24" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="772" y="42" font-size="7" fill="#0a3a60">60</text>
+</g>
+<g class="zone" data-name="Aula 61" data-cat="estribor">
+  <rect x="785" y="30" width="24" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="797" y="42" font-size="7" fill="#0a3a60">61</text>
+</g>
+<g class="zone" data-name="Aula 62" data-cat="estribor">
+  <rect x="810" y="30" width="26" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="823" y="42" font-size="7" fill="#0a3a60">62</text>
+</g>
+
+<!-- Row labels -->
+<text x="600" y="37" font-size="6.5" fill="#888" text-anchor="end">C SC</text>
+<text x="600" y="47" font-size="6.5" fill="#888" text-anchor="end">EIN</text>
+<text x="735" y="37" font-size="6.5" fill="#888" text-anchor="end">CyD</text>
+<text x="735" y="47" font-size="6.5" fill="#888" text-anchor="end">OMI</text>
+
+<!-- Aulas 22-30 (estribor middle) -->
+<g class="zone" data-name="Aula 28" data-cat="estribor">
+  <rect x="605" y="155" width="28" height="30" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="619" y="170" font-size="8" fill="#0a3a60">28</text>
+</g>
+<g class="zone" data-name="Aula 29" data-cat="estribor">
+  <rect x="635" y="155" width="28" height="30" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="649" y="170" font-size="8" fill="#0a3a60">29</text>
+</g>
+<g class="zone" data-name="Aula 30" data-cat="estribor">
+  <rect x="665" y="155" width="28" height="30" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="679" y="170" font-size="8" fill="#0a3a60">30</text>
+</g>
+<g class="zone" data-name="OMI (Estribor)" data-cat="admin">
+  <rect x="695" y="155" width="28" height="30" rx="2" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.2"/>
+  <text class="zone-label" x="709" y="170" font-size="7.5" fill="#5a4a20">OMI</text>
+</g>
+<g class="zone" data-name="1er PB (Estribor B)" data-cat="admin">
+  <rect x="725" y="155" width="30" height="30" rx="2" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.2"/>
+  <text class="zone-label" x="740" y="170" font-size="7" fill="#5a4a20">1er PB</text>
+</g>
+
+<g class="zone" data-name="Aula 22" data-cat="estribor">
+  <rect x="605" y="188" width="28" height="30" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="619" y="203" font-size="8" fill="#0a3a60">22</text>
+</g>
+<g class="zone" data-name="Aula 23" data-cat="estribor">
+  <rect x="635" y="188" width="28" height="30" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="649" y="203" font-size="8" fill="#0a3a60">23</text>
+</g>
+<g class="zone" data-name="Aula 24" data-cat="estribor">
+  <rect x="665" y="188" width="28" height="30" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="679" y="203" font-size="8" fill="#0a3a60">24</text>
+</g>
+<g class="zone" data-name="Baño (Estribor)" data-cat="banos">
+  <rect x="695" y="188" width="28" height="30" rx="2" fill="#f5e0dc" stroke="#d0a0a0" stroke-width="1.2"/>
+  <text class="zone-label" x="709" y="203" font-size="7" fill="#7a4040">WC</text>
+</g>
+<!-- Cruz Roja / 1er PB -->
+<rect x="725" y="188" width="30" height="30" rx="2" fill="#fff0f0" stroke="#d04040" stroke-width="1.2"/>
+<text x="740" y="200" text-anchor="middle" font-size="12" fill="#d04040">✚</text>
+<text x="740" y="213" font-size="6" fill="#888" text-anchor="middle">1er PB</text>
+
+<!-- Cantina / Lab Física -->
+<g class="zone" data-name="Cantina" data-cat="servicios" data-desc="Cantina del campus. Servicio de alimentación para cadetes y personal.">
+  <rect x="760" y="155" width="75" height="30" rx="3" fill="#c0737a" stroke="#904850" stroke-width="1.5"/>
+  <text class="zone-label" x="797" y="170" font-size="8.5" fill="#fff">Cantina</text>
+</g>
+<g class="zone" data-name="Laboratorio de Física" data-cat="lab" data-desc="Laboratorio de Física para prácticas experimentales.">
+  <rect x="760" y="188" width="75" height="30" rx="3" fill="#b8e6c0" stroke="#70c080" stroke-width="1.5"/>
+  <text class="zone-label" x="797" y="203" font-size="8" fill="#1a5a28">Lab. Física</text>
+</g>
+
+<!-- SecGrl / Radar / SIM (middle estribor) -->
+<g class="zone" data-name="Secretaría General" data-cat="admin">
+  <rect x="605" y="245" width="36" height="50" rx="2" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.2"/>
+  <text class="zone-label" x="623" y="260" font-size="7" fill="#5a4a20">Sec</text>
+  <text class="zone-label" x="623" y="271" font-size="7" fill="#5a4a20">Grl</text>
+</g>
+<g class="zone" data-name="Radar" data-cat="lab" data-desc="Laboratorio de Radar y Navegación.">
+  <rect x="643" y="245" width="50" height="24" rx="2" fill="#b8e6c0" stroke="#70c080" stroke-width="1.2"/>
+  <text class="zone-label" x="668" y="257" font-size="8" fill="#1a5a28">radar</text>
+</g>
+
+<!-- Aulas 36-38 -->
+<g class="zone" data-name="Aula 36" data-cat="estribor">
+  <rect x="605" y="295" width="30" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="620" y="309" font-size="8" fill="#0a3a60">36</text>
+</g>
+<g class="zone" data-name="Aula 37" data-cat="estribor">
+  <rect x="637" y="295" width="30" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="652" y="309" font-size="8" fill="#0a3a60">37</text>
+</g>
+<g class="zone" data-name="Aula 38" data-cat="estribor">
+  <rect x="669" y="295" width="30" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="684" y="309" font-size="8" fill="#0a3a60">38</text>
+</g>
+<g class="zone" data-name="SIM" data-cat="lab" data-desc="Simulador de navegación.">
+  <rect x="701" y="295" width="30" height="28" rx="2" fill="#b8e6c0" stroke="#70c080" stroke-width="1.2"/>
+  <text class="zone-label" x="716" y="309" font-size="7.5" fill="#1a5a28">SIM</text>
+</g>
+<g class="zone" data-name="1er PB (Estribor C)" data-cat="admin">
+  <rect x="733" y="295" width="28" height="28" rx="2" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.2"/>
+  <text class="zone-label" x="747" y="309" font-size="6.5" fill="#5a4a20">1er PB</text>
+</g>
+
+<!-- Pañol Banda / 32-34 -->
+<g class="zone" data-name="Pañol Banda" data-cat="servicios" data-desc="Almacén de instrumentos de la banda musical del campus.">
+  <rect x="643" y="270" width="50" height="23" rx="2" fill="#c0737a" stroke="#904850" stroke-width="1.2"/>
+  <text class="zone-label" x="668" y="281" font-size="6.5" fill="#fff">Pañol/Banda</text>
+</g>
+<g class="zone" data-name="Aula 32" data-cat="estribor">
+  <rect x="605" y="325" width="30" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="620" y="339" font-size="8" fill="#0a3a60">32</text>
+</g>
+<g class="zone" data-name="Aula 33" data-cat="estribor">
+  <rect x="637" y="325" width="30" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="652" y="339" font-size="8" fill="#0a3a60">33</text>
+</g>
+<g class="zone" data-name="Aula 34" data-cat="estribor">
+  <rect x="669" y="325" width="30" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="684" y="339" font-size="8" fill="#0a3a60">34</text>
+</g>
+<g class="zone" data-name="PB (Estribor D)" data-cat="admin">
+  <rect x="701" y="325" width="28" height="28" rx="2" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.2"/>
+  <text class="zone-label" x="715" y="339" font-size="7" fill="#5a4a20">PB</text>
+</g>
+
+<!-- Lab Est / Aula Fantasma -->
+<g class="zone" data-name="Laboratorio de Estadística" data-cat="lab" data-desc="Laboratorio de Estadística y Matemáticas Aplicadas.">
+  <rect x="730" y="325" width="56" height="28" rx="2" fill="#b8e6c0" stroke="#70c080" stroke-width="1.5"/>
+  <text class="zone-label" x="758" y="339" font-size="7.5" fill="#1a5a28">Lab. Est.</text>
+</g>
+<g class="zone" data-name="Aula Fantasma" data-cat="estribor" data-desc="Aula adicional conocida coloquialmente como 'Aula Fantasma'.">
+  <rect x="788" y="325" width="48" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="812" y="335" font-size="6.5" fill="#0a3a60">Aula</text>
+  <text class="zone-label" x="812" y="346" font-size="6.5" fill="#0a3a60">fantasma</text>
+</g>
+
+<!-- Aulas 70-72 -->
+<g class="zone" data-name="Aula 70" data-cat="estribor">
+  <rect x="730" y="355" width="28" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="744" y="367" font-size="7.5" fill="#0a3a60">70</text>
+</g>
+<g class="zone" data-name="Aula 71" data-cat="estribor">
+  <rect x="760" y="355" width="28" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="774" y="367" font-size="7.5" fill="#0a3a60">71</text>
+</g>
+<g class="zone" data-name="Aula 72" data-cat="estribor">
+  <rect x="790" y="355" width="28" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="804" y="367" font-size="7.5" fill="#0a3a60">72</text>
+</g>
+
+<!-- COMEDOR -->
+<g class="zone" data-name="Comedor" data-cat="servicios" data-desc="Comedor principal del campus. Servicio de alimentación institucional para cadetes.">
+  <rect x="605" y="390" width="110" height="50" rx="3" fill="#c0737a" stroke="#904850" stroke-width="1.5"/>
+  <text class="zone-label" x="660" y="415" font-size="11" font-weight="600" fill="#fff">COMEDOR</text>
+</g>
+<g class="zone" data-name="Comedor de Oficiales" data-cat="servicios" data-desc="Comedor exclusivo para oficiales y personal directivo.">
+  <rect x="605" y="443" width="70" height="40" rx="3" fill="#b06070" stroke="#804050" stroke-width="1.5"/>
+  <text class="zone-label" x="640" y="455" font-size="7.5" fill="#fff">Comedor</text>
+  <text class="zone-label" x="640" y="466" font-size="7.5" fill="#fff">De oficiales</text>
+</g>
+<g class="zone" data-name="Cocina" data-cat="servicios" data-desc="Área de cocina institucional.">
+  <rect x="677" y="443" width="55" height="40" rx="3" fill="#b06070" stroke="#804050" stroke-width="1.5"/>
+  <text class="zone-label" x="704" y="463" font-size="8" fill="#fff">Cocina</text>
+</g>
+<g class="zone" data-name="Ozono" data-cat="servicios" data-desc="Planta de ozono / purificación de agua.">
+  <rect x="620" y="485" width="55" height="20" rx="2" fill="#a05060" stroke="#804050" stroke-width="1"/>
+  <text class="zone-label" x="647" y="495" font-size="7" fill="#fff">Ozono</text>
+</g>
+
+<!-- Aulas 40-43 -->
+<g class="zone" data-name="Aula 40" data-cat="estribor">
+  <rect x="718" y="415" width="30" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="733" y="427" font-size="7.5" fill="#0a3a60">40</text>
+</g>
+<g class="zone" data-name="Aula 41" data-cat="estribor">
+  <rect x="750" y="415" width="30" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="765" y="427" font-size="7.5" fill="#0a3a60">41</text>
+</g>
+<g class="zone" data-name="Aula 42" data-cat="estribor">
+  <rect x="718" y="385" width="30" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="733" y="399" font-size="7.5" fill="#0a3a60">42</text>
+</g>
+<g class="zone" data-name="Aula 43" data-cat="estribor">
+  <rect x="750" y="385" width="30" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="765" y="399" font-size="7.5" fill="#0a3a60">43</text>
+</g>
+<g class="zone" data-name="1er PB (Estribor E)" data-cat="admin">
+  <rect x="782" y="385" width="30" height="58" rx="2" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.2"/>
+  <text class="zone-label" x="797" y="414" font-size="6.5" fill="#5a4a20">1er PB</text>
+</g>
+
+<!-- LAQ -->
+<g class="zone" data-name="LAQ – Laboratorio de Química" data-cat="lab" data-desc="Laboratorio de Química del campus.">
+  <rect x="818" y="415" width="30" height="30" rx="2" fill="#b8e6c0" stroke="#70c080" stroke-width="1.5"/>
+  <text class="zone-label" x="833" y="430" font-size="7.5" fill="#1a5a28">LAQ</text>
+</g>
+<g class="zone" data-name="Sala de Caldera" data-cat="servicios" data-desc="Sala de caldera e instalaciones técnicas.">
+  <rect x="818" y="447" width="30" height="36" rx="2" fill="#c0737a" stroke="#904850" stroke-width="1.2"/>
+  <text class="zone-label" x="833" y="455" font-size="6" fill="#fff">Sala de</text>
+  <text class="zone-label" x="833" y="466" font-size="6" fill="#fff">Caldera</text>
+</g>
+
+<!-- Oficina / La Gruta -->
+<g class="zone" data-name="Oficina (Estribor)" data-cat="admin" data-desc="Oficinas administrativas del edificio Estribor.">
+  <rect x="605" y="510" width="70" height="35" rx="3" fill="#e8e0cc" stroke="#c8b880" stroke-width="1.5"/>
+  <text class="zone-label" x="640" y="527" font-size="9" fill="#5a4a20">Oficina</text>
+</g>
+<g class="zone" data-name="La Gruta" data-cat="servicios" data-desc="La Gruta – espacio espiritual y de reflexión del campus.">
+  <rect x="605" y="548" width="70" height="50" rx="3" fill="#b06070" stroke="#804050" stroke-width="1.5"/>
+  <text class="zone-label" x="640" y="573" font-size="9" fill="#fff">La Gruta</text>
+</g>
+
+<!-- GIMNASIO -->
+<g class="zone" data-name="Gimnasio" data-cat="canchas" data-desc="Gimnasio del campus. Equipado para entrenamiento físico, pesas y artes marciales.">
+  <rect x="678" y="510" width="110" height="88" rx="4" fill="#b0b8e8" stroke="#7080c0" stroke-width="1.5"/>
+  <text class="zone-label" x="733" y="554" font-size="12" font-weight="600" fill="#1d2a6e">GIMNASIO</text>
+</g>
+
+<!-- WC -->
+<g class="zone" data-name="Baño (Estribor Sur)" data-cat="banos">
+  <rect x="645" y="510" width="30" height="20" rx="2" fill="#f5e0dc" stroke="#d0a0a0" stroke-width="1"/>
+  <text class="zone-label" x="660" y="520" font-size="7" fill="#7a4040">WC</text>
+</g>
+<!-- N (Norte) marker -->
+<text x="660" y="535" text-anchor="middle" font-size="8" fill="#888">N</text>
+
+<!-- RESIDENCIAS -->
+<g class="zone" data-name="Residencias Estudiantiles" data-cat="servicios" data-desc="Residencias estudiantiles del campus. Alojamiento para cadetes foráneos.">
+  <rect x="780" y="695" width="150" height="80" rx="4" fill="#c0737a" stroke="#904850" stroke-width="1.5"/>
+  <text class="zone-label" x="855" y="728" font-size="10" font-weight="600" fill="#fff">RESIDENCIAS</text>
+  <text class="zone-label" x="855" y="742" font-size="10" font-weight="600" fill="#fff">ESTUDIANTILES</text>
+</g>
+
+<!-- Aula 44 -->
+<g class="zone" data-name="Aula 44" data-cat="estribor">
+  <rect x="818" y="485" width="30" height="30" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="833" y="500" font-size="8" fill="#0a3a60">44</text>
+</g>
+
+<!-- ════════════ AULAS 45-52 (esquina inferior derecha) ════════════ -->
+<g class="zone" data-name="Aula 46" data-cat="estribor">
+  <rect x="763" y="785" width="30" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="778" y="799" font-size="8" fill="#0a3a60">46</text>
+</g>
+<g class="zone" data-name="Aula 45" data-cat="estribor">
+  <rect x="795" y="785" width="40" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="815" y="799" font-size="8" fill="#0a3a60">45</text>
+</g>
+<g class="zone" data-name="Aula 47" data-cat="estribor">
+  <rect x="763" y="815" width="30" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="778" y="829" font-size="8" fill="#0a3a60">47</text>
+</g>
+<g class="zone" data-name="Aula 48" data-cat="estribor">
+  <rect x="763" y="845" width="72" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="799" y="859" font-size="8" fill="#0a3a60">48</text>
+</g>
+<g class="zone" data-name="Aula 49" data-cat="estribor">
+  <rect x="763" y="875" width="72" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="799" y="889" font-size="8" fill="#0a3a60">49</text>
+</g>
+<g class="zone" data-name="Aula 50" data-cat="estribor">
+  <rect x="763" y="905" width="72" height="28" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="799" y="919" font-size="8" fill="#0a3a60">50</text>
+</g>
+<g class="zone" data-name="Aula 51" data-cat="estribor">
+  <rect x="763" y="935" width="72" height="24" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="799" y="947" font-size="8" fill="#0a3a60">51</text>
+</g>
+<g class="zone" data-name="Aula 52" data-cat="estribor">
+  <rect x="763" y="960" width="72" height="16" rx="2" fill="#a8d8f0" stroke="#50a0d0" stroke-width="1.2"/>
+  <text class="zone-label" x="799" y="969" font-size="8" fill="#0a3a60">52</text>
+</g>
+
+<!-- ════════════ ROSA DE LOS VIENTOS ════════════ -->
+<g id="compass-rose" transform="translate(60,900)">
+  <circle cx="0" cy="0" r="34" fill="rgba(255,255,255,0.85)" stroke="#1d3557" stroke-width="1.2"/>
+  <!-- N -->
+  <polygon points="0,-30 -5,-10 5,-10" fill="#1d3557"/>
+  <!-- S -->
+  <polygon points="0,30 -5,10 5,10" fill="#8898bb"/>
+  <!-- E -->
+  <polygon points="30,0 10,-5 10,5" fill="#1d3557"/>
+  <!-- O -->
+  <polygon points="-30,0 -10,-5 -10,5" fill="#8898bb"/>
+  <!-- diagonals -->
+  <polygon points="0,-30 -3,-18 3,-18" fill="#1d3557" opacity=".5" transform="rotate(45)"/>
+  <polygon points="0,-30 -3,-18 3,-18" fill="#1d3557" opacity=".5" transform="rotate(135)"/>
+  <polygon points="0,-30 -3,-18 3,-18" fill="#1d3557" opacity=".5" transform="rotate(225)"/>
+  <polygon points="0,-30 -3,-18 3,-18" fill="#1d3557" opacity=".5" transform="rotate(315)"/>
+  <circle cx="0" cy="0" r="4" fill="#fff" stroke="#1d3557" stroke-width="1.2"/>
+  <text x="0" y="-36" text-anchor="middle" font-size="9" font-weight="700" fill="#1d3557">N</text>
+  <text x="0" y="46" text-anchor="middle" font-size="9" font-weight="700" fill="#8898bb">S</text>
+  <text x="42" y="3" text-anchor="middle" font-size="9" font-weight="700" fill="#1d3557">E</text>
+  <text x="-42" y="3" text-anchor="middle" font-size="9" font-weight="700" fill="#8898bb">O</text>
+</g>
+
+<!-- ════════════ LOCATION MARKER ════════════ -->
+<circle cx="550" cy="30" r="10" fill="#e84040" stroke="#fff" stroke-width="2">
+  <animate attributeName="r" values="10;14;10" dur="2s" repeatCount="indefinite"/>
+  <animate attributeName="opacity" values="1;0.6;1" dur="2s" repeatCount="indefinite"/>
+</circle>
+<text x="550" y="50" text-anchor="middle" font-size="7" fill="#e84040" font-weight="600">Ud. está aquí</text>
+
+<!-- Attribution -->
+<text x="480" y="1010" text-anchor="middle" font-size="11" font-weight="500" fill="#94a3b8">Mapa Campus UMC – Elaborado por Ing. Eduardo Rivera</text>
+</svg>
+    </div>
+    
+    <!-- ZOOM CONTROLS -->
+    <div class="zoom-controls">
+      <button id="zoom-in" class="zoom-btn" title="Acercar">+</button>
+      <button id="zoom-out" class="zoom-btn" title="Alejar">−</button>
+      <button id="zoom-reset" class="zoom-btn" title="Restablecer">⟲</button>
+    </div>
+    
+    <!-- LEGEND -->
+    <div id="legend">
+      <h4>Leyenda</h4>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--aula-babor)"></span>Aulas Babor</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--aula-estribor)"></span>Aulas Estribor</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--lab)"></span>Laboratorios</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--multimedia)"></span>Multimedia</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--servicios)"></span>Servicios</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--opsu)"></span>OPSU</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--canchas)"></span>Área Deportiva</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--admin)"></span>Administrativo</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--honor)"></span>Área de Honor</div>
+      <div class="leg-item"><span class="leg-dot" style="background:var(--banos)"></span>Sanitarios</div>
+    </div>
+    
+    <!-- SIGNATURE BADGE -->
+    <div id="signature-badge">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      Elaborado por Ing. Eduardo Rivera
+    </div>
+  </div>
+
+  <!-- INFO PANEL -->
+  <div id="info-panel">
+    <button id="panel-close" onclick="closePanel()">✕</button>
+    <div id="panel-body">
+      <span id="panel-category-badge">–</span>
+      <div id="panel-title">Selecciona una zona</div>
+      <p id="panel-desc">Haz clic en cualquier zona del mapa para ver información detallada.</p>
+      <div id="panel-location">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Campus UMC
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="script.js" defer></script>
+</body>
+</html>
