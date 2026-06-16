@@ -129,6 +129,77 @@ document.getElementById('zoom-reset').addEventListener('click', () => {
   updateTransform();
 });
 
+// ── TOUCH PAN & PINCH-TO-ZOOM (MOBILE) ───────────────────────────────────────
+let isTouching = false;
+let startTouchX = 0;
+let startTouchY = 0;
+let initialPinchDistance = 0;
+let initialScale = 1.0;
+
+function getTouchDistance(touches) {
+  const dx = touches[0].clientX - touches[1].clientX;
+  const dy = touches[0].clientY - touches[1].clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+function getTouchMidpoint(touches) {
+  return {
+    x: (touches[0].clientX + touches[1].clientX) / 2,
+    y: (touches[0].clientY + touches[1].clientY) / 2
+  };
+}
+
+mapSvgWrap.addEventListener('touchstart', (e) => {
+  if (document.activeElement === searchInput) {
+    searchInput.blur();
+  }
+  
+  if (e.touches.length === 1) {
+    isTouching = true;
+    startTouchX = e.touches[0].clientX - panX;
+    startTouchY = e.touches[0].clientY - panY;
+  } else if (e.touches.length === 2) {
+    isTouching = false;
+    initialPinchDistance = getTouchDistance(e.touches);
+    initialScale = scale;
+  }
+}, { passive: true });
+
+mapSvgWrap.addEventListener('touchmove', (e) => {
+  if (e.touches.length === 1 && isTouching) {
+    panX = e.touches[0].clientX - startTouchX;
+    panY = e.touches[0].clientY - startTouchY;
+    updateTransform();
+  } else if (e.touches.length === 2 && initialPinchDistance > 0) {
+    const currentDistance = getTouchDistance(e.touches);
+    const zoomRatio = currentDistance / initialPinchDistance;
+    const oldScale = scale;
+    
+    scale = Math.max(0.4, Math.min(initialScale * zoomRatio, 6.0));
+    
+    const mid = getTouchMidpoint(e.touches);
+    const rect = mapSvgWrap.getBoundingClientRect();
+    const mouseX = mid.x - rect.left;
+    const mouseY = mid.y - rect.top;
+    
+    panX = mouseX - (mouseX - panX) * (scale / oldScale);
+    panY = mouseY - (mouseY - panY) * (scale / oldScale);
+    
+    updateTransform();
+  }
+}, { passive: true });
+
+mapSvgWrap.addEventListener('touchend', (e) => {
+  if (e.touches.length === 0) {
+    isTouching = false;
+    initialPinchDistance = 0;
+  } else if (e.touches.length === 1) {
+    isTouching = true;
+    startTouchX = e.touches[0].clientX - panX;
+    startTouchY = e.touches[0].clientY - panY;
+  }
+}, { passive: true });
+
 
 // ── DETAILS PANEL ─────────────────────────────────────────────────────────────
 function openPanel(name, cat, desc) {
@@ -141,10 +212,12 @@ function openPanel(name, cat, desc) {
   pDesc.textContent = desc || `Área de ${catLabel} dentro del campus de la Universidad Marítima del Caribe (UMC).`;
 
   panel.classList.add('open');
+  mapContainer.classList.add('panel-open');
 }
 
 function closePanel() {
   panel.classList.remove('open');
+  mapContainer.classList.remove('panel-open');
   // Remove active highlighted states
   allZones.forEach(z => z.classList.remove('highlighted'));
 }
@@ -156,6 +229,12 @@ allZones.forEach(zone => {
   // Show tooltip or info panel on click
   zone.addEventListener('click', (e) => {
     e.stopPropagation();
+    
+    // Close keyboard on mobile
+    if (document.activeElement === searchInput) {
+      searchInput.blur();
+    }
+    
     const name = zone.dataset.name || 'Zona sin nombre';
     const cat  = zone.dataset.cat  || 'admin';
     const desc = zone.dataset.desc || '';
@@ -170,6 +249,11 @@ allZones.forEach(zone => {
 
 // Click outside map resets focus
 mapSvgWrap.addEventListener('click', (e) => {
+  // Close keyboard on mobile
+  if (document.activeElement === searchInput) {
+    searchInput.blur();
+  }
+  
   if (e.target === mapSvgWrap || e.target.id === 'campus') {
     closePanel();
   }
@@ -244,22 +328,31 @@ searchInput.addEventListener('input', () => {
     openPanel(name, cat, desc);
     
     // Auto-focus zoom on searched item
-    // Extract bbox or center of target element
-    const rect = firstMatch.getBoundingClientRect();
     const mapRect = mapSvgWrap.getBoundingClientRect();
     
-    // Calculate approximate offset to center the element
+    // Use SVG getBBox to calculate exact center of any element (rect, polygon, ellipse, group)
+    const bbox = firstMatch.getBBox();
+    const elX = bbox.x + bbox.width / 2;
+    const elY = bbox.y + bbox.height / 2;
+    
     // Only zoom in slightly if not already zoomed
     if (scale < 1.5) scale = 1.6;
     
-    const elX = parseFloat(firstMatch.querySelector('rect, polygon, ellipse').getAttribute('x') || 
-                           firstMatch.querySelector('rect, polygon, ellipse').getAttribute('cx') || 400);
-    const elY = parseFloat(firstMatch.querySelector('rect, polygon, ellipse').getAttribute('y') || 
-                           firstMatch.querySelector('rect, polygon, ellipse').getAttribute('cy') || 500);
+    // Calculate centered coordinates, shifting focus to avoid overlapping panels
+    let centerX = mapRect.width / 2;
+    let centerY = mapRect.height / 2;
+    
+    if (window.innerWidth > 991) {
+      // Shift focus left to avoid side panel
+      centerX = (mapRect.width - 340) / 2;
+    } else {
+      // Shift focus up to avoid bottom sheet
+      centerY = (mapRect.height - 200) / 2;
+    }
     
     // Set pan coordinates (scaled and centered)
-    panX = (mapRect.width / 2) - (elX * scale);
-    panY = (mapRect.height / 2) - (elY * scale);
+    panX = centerX - (elX * scale);
+    panY = centerY - (elY * scale);
     updateTransform();
   } else {
     closePanel();
